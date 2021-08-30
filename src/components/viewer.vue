@@ -1,15 +1,29 @@
 <template>
-  <div id="overlay">
+  <div
+    id="overlay"
+    v-on:keydown.left="goLeft()"
+    v-on:keydown.right="goRight()"
+    v-on:keydown.up="goPrev()"
+    v-on:keydown.down="goNext()"
+    tabindex="0"
+  >
     <div id="contents">
       <div id="photoarea">
         <div class="navigation" id="nav-close">
-          <button>X</button>
+          <button v-on:click="close()">X</button>
         </div>
         <div class="navigation" id="nav-left">
-          <button>←</button>
+          <button v-on:click="goLeft()" v-bind:disabled="!isGoLeftBtnClickable">
+            ←
+          </button>
         </div>
         <div class="navigation" id="nav-right">
-          <button>→</button>
+          <button
+            v-on:click="goRight()"
+            v-bind:disabled="!isGoRightBtnClickable"
+          >
+            →
+          </button>
         </div>
         <img v-bind:src="images[index].src" v-bind:alt="images[index].name" />
       </div>
@@ -23,33 +37,92 @@ export default {
   data() {
     return {
       index: 0,
+      isLeftOpening: true,
       images: [
         {
           name: "1ページ目",
-          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/najimi/1_001.jpg",
+          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-000.jpg",
           download: "ダウンロード1",
           print: "プリント1",
           thumbnail:
-            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/najimi/thumb1_001.jpg",
+            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-000.jpg",
         },
         {
           name: "2ページ目",
-          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/najimi/1_002.jpg",
+          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-001.jpg",
           download: "ダウンロード2",
           print: "プリント2",
           thumbnail:
-            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/najimi/thumb1_002.jpg",
+            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-001.jpg",
         },
         {
           name: "3ページ目",
-          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/najimi/1_003.jpg",
+          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-002.jpg",
           download: "ダウンロード3",
           print: "プリント3",
           thumbnail:
-            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/najimi/thumb1_003.jpg",
+            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-002.jpg",
         },
       ],
     };
+  },
+  computed: {
+    isGoLeftBtnClickable: function () {
+      if (this.isLeftOpening) {
+        if (this.index == 0) {
+          return false;
+        }
+      } else {
+        if (this.index == this.images.length - 1) {
+          return false;
+        }
+      }
+      return true;
+    },
+    isGoRightBtnClickable: function () {
+      if (this.isLeftOpening) {
+        if (this.index == this.images.length - 1) {
+          return false;
+        }
+      } else {
+        if (this.index == 0) {
+          return false;
+        }
+      }
+      return true;
+    },
+  },
+  methods: {
+    goRight: function () {
+      if (this.isLeftOpening) {
+        this.goNext();
+      } else {
+        this.goPrev();
+      }
+    },
+    goLeft: function () {
+      if (this.isLeftOpening) {
+        this.goPrev();
+      } else {
+        this.goNext();
+      }
+    },
+    close: function () {
+      this.$emit("close");
+      //console.log("close");
+    },
+    goNext() {
+      this.index++;
+      if (this.index > this.images.length - 1) {
+        this.index = this.images.length - 1;
+      }
+    },
+    goPrev() {
+      this.index--;
+      if (this.index < 0) {
+        this.index = 0;
+      }
+    },
   },
 };
 </script>
@@ -95,6 +168,10 @@ div#photoarea img {
 
 .navigation {
   position: absolute;
+}
+
+button {
+  display: block;
 }
 
 #nav-close {

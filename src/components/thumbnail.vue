@@ -1,13 +1,13 @@
 <template>
   <ul>
-    <li v-for="(image, index) in images" v-bind:key="index">
-      <div>
+    <li v-for="(image, htmlIndex) in images" v-bind:key="htmlIndex">
+      <div v-on:click="onclick(htmlIndex)">
         <img
           v-bind:src="image.thumbnail"
-          v-bind:alt="'サムネイル' + (index + 1) + 'ページ目'"
-          v-on:click="onclick(index)"
+          v-bind:alt="'サムネイル' + (htmlIndex + 1) + 'ページ目'"
+          v-bind:current="index == htmlIndex"
         />
-        <span>{{ index }}ページ</span>
+        <span>{{ htmlIndex }}ページ</span>
       </div>
     </li>
   </ul>
@@ -22,36 +22,35 @@ export default {
       images: [
         {
           name: "1ページ目",
-          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/najimi/1_001.jpg",
+          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-000.jpg",
           download: "ダウンロード1",
           print: "プリント1",
           thumbnail:
-            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/najimi/thumb1_001.jpg",
+            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-000.jpg",
         },
         {
           name: "2ページ目",
-          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/najimi/1_002.jpg",
+          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-001.jpg",
           download: "ダウンロード2",
           print: "プリント2",
           thumbnail:
-            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/najimi/thumb1_002.jpg",
+            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-001.jpg",
         },
         {
           name: "3ページ目",
-          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/najimi/1_003.jpg",
+          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-002.jpg",
           download: "ダウンロード3",
           print: "プリント3",
           thumbnail:
-            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/najimi/thumb1_003.jpg",
+            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-002.jpg",
         },
       ],
     };
   },
-  methods:{
-    onclick: function(clickedIndex){
+  methods: {
+    onclick: function (clickedIndex) {
       this.index = clickedIndex;
-      console.log(this.index);
-    }
+    },
   },
 };
 </script>
@@ -69,14 +68,17 @@ ul li {
   padding-bottom: 10px;
 }
 
-img{
+img {
   display: block;
   margin: 0 auto;
+}
+
+img[current]{
+  border: 3px solid pink;
 }
 
 span {
   display: block;
   text-align: center;
 }
-
 </style>
