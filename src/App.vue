@@ -1,33 +1,54 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/article/108">記事: No.108</router-link>
+  <div id="container" class="clearfix">
+    <div id="thumbnail">
+      <Thumbnail align="column"></Thumbnail>
     </div>
-    <router-view/>
+    <div id="viewer">
+      <Viewer></Viewer>
+    </div>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import Thumbnail from '@/components/Thumbnail.vue'
+import Viewer from '@/components/Viewer.vue'
+
+export default {
+  name: 'home',
+  components: {
+    Thumbnail,
+    Viewer
+  }
+}
+</script>
+
+<style scoped>
+#container{
+  --thumb-width: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-#nav {
-  padding: 30px;
+.clearfix::after{
+  content: "";
+  display: block;
+  clear: both;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+#thumbnail{
+  width: var(--thumb-width);
+  height: 100%;
+  float: left;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+#viewer{
+  width: calc(100% - var(--thumb-width));
+  height: 100%;
+  float:right;
 }
 </style>

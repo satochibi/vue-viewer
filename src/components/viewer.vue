@@ -32,105 +32,106 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  name: "viewer",
+  name: 'viewer',
   data() {
     return {
       index: 0,
-      isLeftOpening: true,
+      isLeftOpening: false,
       images: [
         {
-          name: "1ページ目",
-          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-000.jpg",
-          download: "ダウンロード1",
-          print: "プリント1",
+          name: '1ページ目',
+          src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-000.jpg',
+          download: 'ダウンロード1',
+          print: 'プリント1',
           thumbnail:
-            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-000.jpg",
+            'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-000.jpg'
         },
         {
-          name: "2ページ目",
-          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-001.jpg",
-          download: "ダウンロード2",
-          print: "プリント2",
+          name: '2ページ目',
+          src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-001.jpg',
+          download: 'ダウンロード2',
+          print: 'プリント2',
           thumbnail:
-            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-001.jpg",
+            'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-001.jpg'
         },
         {
-          name: "3ページ目",
-          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-002.jpg",
-          download: "ダウンロード3",
-          print: "プリント3",
+          name: '3ページ目',
+          src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-002.jpg',
+          download: 'ダウンロード3',
+          print: 'プリント3',
           thumbnail:
-            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-002.jpg",
-        },
-      ],
-    };
+            'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-002.jpg'
+        }
+      ]
+    }
   },
   computed: {
-    isGoLeftBtnClickable: function () {
+    isGoLeftBtnClickable: function() {
       if (this.isLeftOpening) {
-        if (this.index == 0) {
-          return false;
+        if (this.index === 0) {
+          return false
         }
       } else {
-        if (this.index == this.images.length - 1) {
-          return false;
+        if (this.index === this.images.length - 1) {
+          return false
         }
       }
-      return true;
+      return true
     },
-    isGoRightBtnClickable: function () {
+    isGoRightBtnClickable: function() {
       if (this.isLeftOpening) {
-        if (this.index == this.images.length - 1) {
-          return false;
+        if (this.index === this.images.length - 1) {
+          return false
         }
       } else {
-        if (this.index == 0) {
-          return false;
+        if (this.index === 0) {
+          return false
         }
       }
-      return true;
+      return true
     },
+    ...mapGetters(['getIndex', 'getImagesAll', 'getCurrentImage', 'getIsThumbOpen'])
   },
   methods: {
-    goRight: function () {
+    goRight: function() {
       if (this.isLeftOpening) {
-        this.goNext();
+        this.goNext()
       } else {
-        this.goPrev();
+        this.goPrev()
       }
     },
-    goLeft: function () {
+    goLeft: function() {
       if (this.isLeftOpening) {
-        this.goPrev();
+        this.goPrev()
       } else {
-        this.goNext();
+        this.goNext()
       }
     },
-    close: function () {
-      this.$emit("close");
-      //console.log("close");
+    close: function() {
+      this.$emit('close')
     },
     goNext() {
-      this.index++;
+      this.index++
       if (this.index > this.images.length - 1) {
-        this.index = this.images.length - 1;
+        this.index = this.images.length - 1
       }
     },
     goPrev() {
-      this.index--;
+      this.index--
       if (this.index < 0) {
-        this.index = 0;
+        this.index = 0
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
-
 
 <style scoped>
 div#overlay {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;

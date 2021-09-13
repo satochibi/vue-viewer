@@ -14,12 +14,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  name: "thumbnail",
+  name: 'thumbnail',
   props: {
     align: {
       type: String,
-      default: "column"
+      default: 'column'
     }
   },
   data() {
@@ -28,38 +30,41 @@ export default {
       index: 0,
       images: [
         {
-          name: "1ページ目",
-          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-000.jpg",
-          download: "ダウンロード1",
-          print: "プリント1",
+          name: '1ページ目',
+          src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-000.jpg',
+          download: 'ダウンロード1',
+          print: 'プリント1',
           thumbnail:
-            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-000.jpg",
+            'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-000.jpg'
         },
         {
-          name: "2ページ目",
-          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-001.jpg",
-          download: "ダウンロード2",
-          print: "プリント2",
+          name: '2ページ目',
+          src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-001.jpg',
+          download: 'ダウンロード2',
+          print: 'プリント2',
           thumbnail:
-            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-001.jpg",
+            'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-001.jpg'
         },
         {
-          name: "3ページ目",
-          src: "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-002.jpg",
-          download: "ダウンロード3",
-          print: "プリント3",
+          name: '3ページ目',
+          src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-002.jpg',
+          download: 'ダウンロード3',
+          print: 'プリント3',
           thumbnail:
-            "http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-002.jpg",
-        },
-      ],
-    };
+            'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-002.jpg'
+        }
+      ]
+    }
+  },
+  computed: {
+    ...mapGetters(['getIndex', 'getImagesAll'])
   },
   methods: {
-    onclick: function (clickedIndex) {
-      this.index = clickedIndex;
-    },
-  },
-};
+    onclick: function(clickedIndex) {
+      this.index = clickedIndex
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   strict: true,
   state: {
+    isThumbOpen: true,
     index: 0,
     images: [
       {
@@ -46,7 +47,11 @@ export default new Vuex.Store({
     },
     getCurrentImage(state) {
       return state.images[state.index]
+    },
+    getIsThumbOpen(state) {
+      return state.isThumbOpen
     }
+
   },
   mutations: {
     changeIndex(state, payload) {
