@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul v-bind:class="alignClass">
     <li v-for="(image, htmlIndex) in images" v-bind:key="htmlIndex">
       <div v-on:click="onclick(htmlIndex)">
         <img
@@ -16,8 +16,15 @@
 <script>
 export default {
   name: "thumbnail",
+  props: {
+    align: {
+      type: String,
+      default: "column"
+    }
+  },
   data() {
     return {
+      alignClass: this.align,
       index: 0,
       images: [
         {
@@ -57,15 +64,26 @@ export default {
 
 <style scoped>
 ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 0;
   list-style: none;
   padding: 0;
   margin: 10px auto;
 }
+
+ul.row {
+  flex-direction: row;
+}
+
+ul.column {
+  flex-direction: column;
+}
+
 ul li {
   font-size: 14px;
   display: block;
-  padding-bottom: 10px;
 }
 
 img {
@@ -73,7 +91,7 @@ img {
   margin: 0 auto;
 }
 
-img[current]{
+img[current] {
   border: 3px solid pink;
 }
 
