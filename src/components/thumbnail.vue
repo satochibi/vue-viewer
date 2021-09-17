@@ -1,11 +1,11 @@
 <template>
   <ul v-bind:class="alignClass">
-    <li v-for="(image, htmlIndex) in images" v-bind:key="htmlIndex">
+    <li v-for="(image, htmlIndex) in getImagesAll" v-bind:key="htmlIndex">
       <div v-on:click="onclick(htmlIndex)">
         <img
           v-bind:src="image.thumbnail"
           v-bind:alt="'サムネイル' + (htmlIndex + 1) + 'ページ目'"
-          v-bind:current="index == htmlIndex"
+          v-bind:current="getIndex == htmlIndex"
         />
         <span>{{ htmlIndex }}ページ</span>
       </div>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'thumbnail',
@@ -26,34 +26,7 @@ export default {
   },
   data() {
     return {
-      alignClass: this.align,
-      index: 0,
-      images: [
-        {
-          name: '1ページ目',
-          src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-000.jpg',
-          download: 'ダウンロード1',
-          print: 'プリント1',
-          thumbnail:
-            'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-000.jpg'
-        },
-        {
-          name: '2ページ目',
-          src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-001.jpg',
-          download: 'ダウンロード2',
-          print: 'プリント2',
-          thumbnail:
-            'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-001.jpg'
-        },
-        {
-          name: '3ページ目',
-          src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-002.jpg',
-          download: 'ダウンロード3',
-          print: 'プリント3',
-          thumbnail:
-            'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-002.jpg'
-        }
-      ]
+      alignClass: this.align
     }
   },
   computed: {
@@ -61,8 +34,9 @@ export default {
   },
   methods: {
     onclick: function(clickedIndex) {
-      this.index = clickedIndex
-    }
+      this.changeIndex(clickedIndex)
+    },
+    ...mapActions(['changeIndex'])
   }
 }
 </script>
