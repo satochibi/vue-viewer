@@ -25,57 +25,30 @@
             →
           </button>
         </div>
-        <img v-bind:src="images[index].src" v-bind:alt="images[index].name" />
+        <img v-bind:src="getCurrentImage.src" v-bind:alt="getCurrentImage.name" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'viewer',
   data() {
     return {
-      index: 0,
-      isLeftOpening: false,
-      images: [
-        {
-          name: '1ページ目',
-          src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-000.jpg',
-          download: 'ダウンロード1',
-          print: 'プリント1',
-          thumbnail:
-            'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-000.jpg'
-        },
-        {
-          name: '2ページ目',
-          src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-001.jpg',
-          download: 'ダウンロード2',
-          print: 'プリント2',
-          thumbnail:
-            'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-001.jpg'
-        },
-        {
-          name: '3ページ目',
-          src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-002.jpg',
-          download: 'ダウンロード3',
-          print: 'プリント3',
-          thumbnail:
-            'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-002.jpg'
-        }
-      ]
+      isLeftOpening: false
     }
   },
   computed: {
     isGoLeftBtnClickable: function() {
       if (this.isLeftOpening) {
-        if (this.index === 0) {
+        if (this.getIndex === 0) {
           return false
         }
       } else {
-        if (this.index === this.images.length - 1) {
+        if (this.getIndex === this.imagesCount - 1) {
           return false
         }
       }
@@ -83,17 +56,17 @@ export default {
     },
     isGoRightBtnClickable: function() {
       if (this.isLeftOpening) {
-        if (this.index === this.images.length - 1) {
+        if (this.getIndex === this.imagesCount - 1) {
           return false
         }
       } else {
-        if (this.index === 0) {
+        if (this.getIndex === 0) {
           return false
         }
       }
       return true
     },
-    ...mapGetters(['getIndex', 'getImagesAll', 'getCurrentImage', 'getIsThumbOpen'])
+    ...mapGetters(['getIndex', 'getImagesAll', 'imagesCount', 'getCurrentImage', 'getIsThumbOpen'])
   },
   methods: {
     goRight: function() {
@@ -114,17 +87,18 @@ export default {
       this.$emit('close')
     },
     goNext() {
-      this.index++
-      if (this.index > this.images.length - 1) {
-        this.index = this.images.length - 1
+      this.changeIndex(this.getIndex + 1)
+      if (this.getIndex > this.imagesCount - 1) {
+        this.changeIndex(this.imagesCount - 1)
       }
     },
     goPrev() {
-      this.index--
-      if (this.index < 0) {
-        this.index = 0
+      this.changeIndex(this.getIndex - 1)
+      if (this.getIndex < 0) {
+        this.changeIndex(0)
       }
-    }
+    },
+    ...mapActions(['changeIndex'])
   }
 }
 </script>
