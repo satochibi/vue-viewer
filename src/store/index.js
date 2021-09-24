@@ -50,12 +50,29 @@ export default new Vuex.Store({
     },
     getIsThumbOpen(state) {
       return state.isThumbOpen
+    },
+    isIndexWithInRange: (state) => (index) => {
+      return (index >= 0 && index < state.images.length)
+    },
+    isIndexAfterTheFirstOfTheRange: (state) => (index) => {
+      return (index >= 0)
+    },
+    isIndexBeforeTheLastOfTheRange: (state) => (index) => {
+      return (index < state.images.length)
     }
-
   },
   mutations: {
     changeIndex(state, payload) {
-      state.index = payload
+      if (payload >= 0 && payload < state.images.length) {
+        state.index = payload
+      } else {
+        if (!(payload >= 0)) {
+          state.index = 0
+        } else if (!(payload < state.images.length)) {
+          state.index = state.images.length - 1
+        }
+        throw new Error('アクセスした先がページの範囲を超えています。')
+      }
     }
   },
   actions: {

@@ -66,7 +66,7 @@ export default {
       }
       return true
     },
-    ...mapGetters(['getIndex', 'getImagesAll', 'imagesCount', 'getCurrentImage', 'getIsThumbOpen'])
+    ...mapGetters(['getIndex', 'getImagesAll', 'imagesCount', 'getCurrentImage', 'getIsThumbOpen', 'isIndexWithInRange'])
   },
   methods: {
     goRight: function() {
@@ -87,15 +87,13 @@ export default {
       this.$emit('close')
     },
     goNext() {
-      this.changeIndex(this.getIndex + 1)
-      if (this.getIndex > this.imagesCount - 1) {
-        this.changeIndex(this.imagesCount - 1)
+      if (this.isIndexWithInRange(this.getIndex + 1)) {
+        this.changeIndex(this.getIndex + 1)
       }
     },
     goPrev() {
-      this.changeIndex(this.getIndex - 1)
-      if (this.getIndex < 0) {
-        this.changeIndex(0)
+      if (this.isIndexWithInRange(this.getIndex - 1)) {
+        this.changeIndex(this.getIndex - 1)
       }
     },
     ...mapActions(['changeIndex'])
