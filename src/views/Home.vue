@@ -1,10 +1,10 @@
 <template>
   <div id="container" class="clearfix" v-bind:style="styles">
-    <div id="thumbnail" v-bind:style="thumbnailStyle">
-      <Thumbnail v-bind:align="isThumbnailColumnORRow"></Thumbnail>
-    </div>
     <div id="viewer" v-bind:style="viewerStyle">
       <Viewer></Viewer>
+    </div>
+    <div id="thumbnail" v-bind:style="thumbnailStyle">
+      <Thumbnail v-bind:align="isThumbnailColumnORRow"></Thumbnail>
     </div>
   </div>
 </template>
