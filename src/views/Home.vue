@@ -1,9 +1,9 @@
 <template>
-  <div id="container" class="clearfix">
-    <div id="thumbnail">
-      <Thumbnail align="column"></Thumbnail>
+  <div id="container" class="clearfix" v-bind:style="styles">
+    <div id="thumbnail" v-bind:style="thumbnailStyle">
+      <Thumbnail v-bind:align="isThumbnailColumnORRow"></Thumbnail>
     </div>
-    <div id="viewer">
+    <div id="viewer" v-bind:style="viewerStyle">
       <Viewer></Viewer>
     </div>
   </div>
@@ -25,6 +25,21 @@ export default {
     index: {
       type: Number,
       default: 0
+    },
+    thumbnailAlign: {
+      type: String,
+      default: 'left'
+    },
+    thumbnailSize: {
+      type: String,
+      default: '100px'
+    }
+  },
+  data() {
+    return {
+      isThumbnailColumnORRow: 'column',
+      thumbnailStyle: {},
+      viewerStyle: {}
     }
   },
   created: function() {
@@ -32,6 +47,31 @@ export default {
       this.changeIndex(this.index)
     } catch (error) {
       alert(error)
+    }
+
+    switch (this.thumbnailAlign) {
+      case 'left':
+        this.thumbnailStyle = { float: 'left' }
+        this.viewerStyle = { float: 'right' }
+        this.isThumbnailColumnORRow = 'column'
+        break
+      case 'right':
+        this.thumbnailStyle = { float: 'right' }
+        this.viewerStyle = { float: 'left' }
+        this.isThumbnailColumnORRow = 'column'
+        break
+      case 'bottom':
+        this.isThumbnailColumnORRow = 'row'
+        break
+      default:
+        throw new Error('thumbnailAlignプロパティが不正です。')
+    }
+  },
+  computed: {
+    styles() {
+      return {
+        '--thumb-size': this.thumbnailSize
+      }
     }
   },
   methods: {
@@ -42,7 +82,6 @@ export default {
 
 <style scoped>
 #container{
-  --thumb-width: 100px;
   position: absolute;
   top: 0;
   left: 0;
@@ -59,15 +98,13 @@ export default {
 }
 
 #thumbnail{
-  width: var(--thumb-width);
+  width: var(--thumb-size);
   height: 100%;
-  float: left;
   overflow: scroll;
 }
 
 #viewer{
-  width: calc(100% - var(--thumb-width));
+  width: calc(100% - var(--thumb-size));
   height: 100%;
-  float:right;
 }
 </style>
