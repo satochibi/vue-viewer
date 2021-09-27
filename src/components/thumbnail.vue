@@ -35,6 +35,7 @@ export default {
   methods: {
     onclick: function(clickedIndex) {
       this.changeIndex(clickedIndex)
+      this.$router.push('/' + this.getIndex)
     },
     ...mapActions(['changeIndex'])
   }

@@ -89,11 +89,13 @@ export default {
     goNext() {
       if (this.isIndexWithInRange(this.getIndex + 1)) {
         this.changeIndex(this.getIndex + 1)
+        this.$router.push('/' + this.getIndex)
       }
     },
     goPrev() {
       if (this.isIndexWithInRange(this.getIndex - 1)) {
         this.changeIndex(this.getIndex - 1)
+        this.$router.push('/' + this.getIndex)
       }
     },
     ...mapActions(['changeIndex'])
