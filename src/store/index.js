@@ -32,6 +32,46 @@ export default new Vuex.Store({
         print: 'プリント3',
         thumbnail:
           'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-002.jpg'
+      },
+      {
+        name: '4ページ目',
+        src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-003.jpg',
+        download: 'ダウンロード4',
+        print: 'プリント4',
+        thumbnail:
+          'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-003.jpg'
+      },
+      {
+        name: '5ページ目',
+        src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-004.jpg',
+        download: 'ダウンロード5',
+        print: 'プリント5',
+        thumbnail:
+          'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-004.jpg'
+      },
+      {
+        name: '6ページ目',
+        src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-005.jpg',
+        download: 'ダウンロード6',
+        print: 'プリント6',
+        thumbnail:
+          'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-005.jpg'
+      },
+      {
+        name: '7ページ目',
+        src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-006.jpg',
+        download: 'ダウンロード7',
+        print: 'プリント7',
+        thumbnail:
+          'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-006.jpg'
+      },
+      {
+        name: '8ページ目',
+        src: 'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/A-007.jpg',
+        download: 'ダウンロード8',
+        print: 'プリント8',
+        thumbnail:
+          'http://ehimestream.xsrv.jp/digital_archives/wp-content/themes/digitalarchives/image/A_najimishu/thumb/A-007.jpg'
       }
     ]
   },

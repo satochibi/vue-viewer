@@ -1,5 +1,9 @@
 <template>
-  <ul v-bind:class="alignClass">
+  <ul v-bind:class="alignClass"
+    v-on:keydown.up="goPrev()"
+    v-on:keydown.down="goNext()"
+    tabindex="1"
+  >
     <li v-for="(image, htmlIndex) in getImagesAll" v-bind:key="htmlIndex">
       <div v-on:click="onclick(htmlIndex)">
         <img
@@ -7,7 +11,7 @@
           v-bind:alt="'サムネイル' + (htmlIndex + 1) + 'ページ目'"
           v-bind:current="getIndex == htmlIndex"
         />
-        <span>{{ htmlIndex }}ページ</span>
+        <span>Page: {{ htmlIndex }}</span>
       </div>
     </li>
   </ul>
@@ -30,12 +34,24 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getIndex', 'getImagesAll'])
+    ...mapGetters(['getIndex', 'getImagesAll', 'isIndexWithInRange'])
   },
   methods: {
     onclick: function(clickedIndex) {
       this.changeIndex(clickedIndex)
-      this.$router.push('/' + this.getIndex)
+      this.$router.push('/' + this.getIndex, () => {})
+    },
+    goNext() {
+      if (this.isIndexWithInRange(this.getIndex + 1)) {
+        this.changeIndex(this.getIndex + 1)
+        this.$router.push('/' + this.getIndex, () => {})
+      }
+    },
+    goPrev() {
+      if (this.isIndexWithInRange(this.getIndex - 1)) {
+        this.changeIndex(this.getIndex - 1)
+        this.$router.push('/' + this.getIndex, () => {})
+      }
     },
     ...mapActions(['changeIndex'])
   }
@@ -49,8 +65,8 @@ ul {
   align-items: center;
   font-size: 0;
   list-style: none;
-  padding: 0;
-  margin: 10px auto;
+  padding: 10px 0;
+  margin: 0px auto;
 }
 
 ul.row {

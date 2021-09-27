@@ -62,6 +62,7 @@ export default {
   width: var(--thumb-width);
   height: 100%;
   float: left;
+  overflow: scroll;
 }
 
 #viewer{

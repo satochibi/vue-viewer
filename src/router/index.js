@@ -12,7 +12,7 @@ const routes = [
   },
   {
     path: '/:index',
-    name: 'Home',
+    name: 'HomeWithIndex',
     component: Home,
     props: (route) => ({ index: Number(route.params.index) })
   }
