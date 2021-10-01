@@ -2,6 +2,36 @@
   <div id="container" class="clearfix" v-bind:style="styles">
     <div id="toolbar">
       <h1>子規選句稿「なじみ集」</h1>
+      <hr />
+      <div id="tooltip">
+        <button class="icon">
+          <font-awesome-icon icon="info-circle" />
+        </button>
+        <button class="icon">
+          <font-awesome-icon icon="th" />
+        </button>
+        <button class="icon">
+          <font-awesome-icon icon="search-minus" />
+        </button>
+        <button class="icon">
+          <font-awesome-icon icon="search-plus" />
+        </button>
+        <button class="icon">
+          <font-awesome-icon icon="expand-arrows-alt" />
+        </button>
+        <button class="icon">
+          <font-awesome-icon icon="undo" />
+        </button>
+        <button class="icon">
+          <font-awesome-icon icon="print" />
+        </button>
+        <button class="icon">
+          <font-awesome-icon icon="file-image" />
+        </button>
+        <button class="icon">
+          <font-awesome-icon icon="expand" />
+        </button>
+      </div>
     </div>
     <div id="normalview">
       <div id="viewer" v-bind:style="viewerStyle">
@@ -114,10 +144,29 @@ export default {
   padding: 0;
 }
 
+#toolbar hr{
+  margin: 2px 0;
+  padding: 0;
+}
+
+#tooltip {
+  display: flex;
+  justify-content: center;
+  overflow-x: scroll;
+}
+
+#tooltip button.icon{
+  padding: 5px 10px;
+  margin: 0 5px;
+  font-size: 24px;
+  width: 48px;
+  height: 42px;
+}
+
 #toolbar h1{
   padding: 0;
   margin: 0;
-  font-size: 19px;
+  font-size: 20px;
   text-align: center;
 }
 
