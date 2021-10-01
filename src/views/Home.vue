@@ -1,10 +1,15 @@
 <template>
   <div id="container" class="clearfix" v-bind:style="styles">
-    <div id="viewer" v-bind:style="viewerStyle">
-      <Viewer></Viewer>
+    <div id="toolbar">
+      <h1>子規選句稿「なじみ集」</h1>
     </div>
-    <div id="thumbnail" v-bind:style="thumbnailStyle">
-      <Thumbnail v-bind:align="isThumbnailColumnORRow"></Thumbnail>
+    <div id="normalview">
+      <div id="viewer" v-bind:style="viewerStyle">
+        <Viewer></Viewer>
+      </div>
+      <div id="thumbnail" v-bind:style="thumbnailStyle">
+        <Thumbnail v-bind:align="isThumbnailColumnORRow"></Thumbnail>
+      </div>
     </div>
   </div>
 </template>
@@ -25,6 +30,10 @@ export default {
     index: {
       type: Number,
       default: 0
+    },
+    toolbarSize: {
+      type: String,
+      default: '80px'
     },
     thumbnailAlign: {
       type: String,
@@ -70,7 +79,8 @@ export default {
   computed: {
     styles() {
       return {
-        '--thumb-size': this.thumbnailSize
+        '--thumb-size': this.thumbnailSize,
+        '--toolbar-size': this.toolbarSize
       }
     }
   },
@@ -95,6 +105,27 @@ export default {
   content: "";
   display: block;
   clear: both;
+}
+
+#toolbar {
+  width: 100%;
+  height: var(--toolbar-size);
+  margin: 0;
+  padding: 0;
+}
+
+#toolbar h1{
+  padding: 0;
+  margin: 0;
+  font-size: 19px;
+  text-align: center;
+}
+
+#normalview {
+  width: 100%;
+  height: calc(100% - var(--toolbar-size));
+  margin: 0;
+  padding: 0;
 }
 
 #thumbnail{
