@@ -14,7 +14,7 @@ const routes = [
     path: '/:index',
     name: 'HomeWithIndex',
     component: Home,
-    props: (route) => ({ index: Number(route.params.index) })
+    props: (route) => ({ initIndex: Number(route.params.index) })
   }
 ]
 

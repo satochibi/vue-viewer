@@ -38,7 +38,13 @@ export default {
   name: 'viewer',
   data() {
     return {
-      isLeftOpening: false
+      isLeftOpening: this.initIsLeftOpening
+    }
+  },
+  props: {
+    initIsLeftOpening: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {

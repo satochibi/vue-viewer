@@ -4,10 +4,15 @@
       <h1>子規選句稿「なじみ集」</h1>
       <hr />
       <div id="tooltip">
+        <div id="page">
+          <label>
+            ページ番号: <input type="number" min="0" v-bind:max="this.imagesCount-1" v-bind:value="this.getIndex" v-on:input="onPageChange($event, $event.target.value)" />/{{this.imagesCount}}
+          </label>
+        </div>
         <button class="icon">
           <font-awesome-icon icon="info-circle" />
         </button>
-        <button class="icon">
+        <button class="icon" v-on:click="thumbnailToggle()">
           <font-awesome-icon icon="th" />
         </button>
         <button class="icon">
@@ -35,7 +40,7 @@
     </div>
     <div id="normalview">
       <div id="viewer" v-bind:style="viewerStyle">
-        <Viewer></Viewer>
+        <Viewer v-bind:initIsLeftOpening="false"></Viewer>
       </div>
       <div id="thumbnail" v-bind:style="thumbnailStyle">
         <Thumbnail v-bind:align="isThumbnailColumnORRow"></Thumbnail>
@@ -48,7 +53,7 @@
 import Thumbnail from '@/components/Thumbnail.vue'
 import Viewer from '@/components/Viewer.vue'
 
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'home',
@@ -57,38 +62,39 @@ export default {
     Viewer
   },
   props: {
-    index: {
+    initIndex: {
       type: Number,
       default: 0
     },
-    toolbarSize: {
+    initToolbarSize: {
       type: String,
       default: '80px'
     },
-    thumbnailAlign: {
+    initThumbnailAlign: {
       type: String,
       default: 'left'
     },
-    thumbnailSize: {
+    initThumbnailSize: {
       type: String,
       default: '100px'
+    },
+    initThubmnailOpen: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     return {
+      isThumbnailOpen: this.initThubmnailOpen,
       isThumbnailColumnORRow: 'column',
       thumbnailStyle: {},
       viewerStyle: {}
     }
   },
   created: function() {
-    try {
-      this.changeIndex(this.index)
-    } catch (error) {
-      alert(error)
-    }
+    this.onPageChange(null, this.initIndex)
 
-    switch (this.thumbnailAlign) {
+    switch (this.initThumbnailAlign) {
       case 'left':
         this.thumbnailStyle = { float: 'left' }
         this.viewerStyle = { float: 'right' }
@@ -110,11 +116,35 @@ export default {
     styles() {
       return {
         '--thumb-size': this.thumbnailSize,
-        '--toolbar-size': this.toolbarSize
+        '--toolbar-size': this.initToolbarSize
       }
-    }
+    },
+    thumbnailSize: function() {
+      return this.isThumbnailOpen ? this.initThumbnailSize : '0px'
+    },
+    ...mapGetters(['imagesCount', 'getIndex'])
   },
   methods: {
+    thumbnailToggle: function() {
+      // サムネイルをトグルさせる
+      this.isThumbnailOpen ^= true
+    },
+    onPageChange: function(event, index) {
+      if (!index) {
+        return
+      }
+      try {
+        const indexNum = parseInt(index, 10)
+        this.changeIndex(indexNum)
+        this.$router.push('/' + this.getIndex, () => {})
+      } catch (error) {
+        alert(error)
+        if (event) {
+          event.target.value = ''
+        }
+        this.$router.push('/' + this.getIndex, () => {})
+      }
+    },
     ...mapActions(['changeIndex'])
   }
 }
@@ -186,5 +216,14 @@ export default {
 #viewer{
   width: calc(100% - var(--thumb-size));
   height: 100%;
+}
+
+#page {
+  font-size: 27px;
+}
+
+#page input {
+  width: 3em;
+  font-size: 27px;
 }
 </style>
