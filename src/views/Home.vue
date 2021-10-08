@@ -35,9 +35,12 @@
         <button class="icon">
           <font-awesome-icon icon="print" />
         </button>
-        <button class="icon">
-          <font-awesome-icon icon="file-image" />
-        </button>
+        <!-- 同一オリジンでないとダウンロードされないのは仕様 -->
+        <a v-bind:href="getCurrentImage.src" download>
+          <button class="icon">
+            <font-awesome-icon icon="file-image" />
+          </button>
+        </a>
         <button class="icon" v-on:click="clipBoardCopy()">
           <font-awesome-icon icon="link" />
         </button>
@@ -131,7 +134,7 @@ export default {
     thumbnailSize: function() {
       return this.isThumbnailOpen ? this.initThumbnailSize : '0px'
     },
-    ...mapGetters(['imagesCount', 'getIndex'])
+    ...mapGetters(['imagesCount', 'getIndex', 'getCurrentImage'])
   },
   methods: {
     thumbnailToggle: function() {
