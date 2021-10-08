@@ -38,6 +38,9 @@
         <button class="icon">
           <font-awesome-icon icon="file-image" />
         </button>
+        <button class="icon" v-on:click="clipBoardCopy()">
+          <font-awesome-icon icon="link" />
+        </button>
         <button class="icon" v-on:click="fullScreenToggle()">
           <font-awesome-icon icon="expand" />
         </button>
@@ -149,6 +152,14 @@ export default {
       } else {
         document.exitFullscreen()
       }
+    },
+    clipBoardCopy: function() {
+      const that = this
+      this.$copyText(location.href).then(function(e) {
+        that.$toasted.show('クリップボードにURLをコピーしました!')
+      }, function(e) {
+        that.$toasted.show('エラーが発生しました')
+      })
     },
     onPageChange: function(event, index) {
       if (!index) {
