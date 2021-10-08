@@ -7,7 +7,7 @@
     v-on:keydown.down="goNext()"
     tabindex="0"
   >
-    <div id="contents">
+    <div id="contents" v-bind:class="{fullscreen: initIsFullScreen}">
       <div id="photoarea">
         <div class="navigation" id="nav-close">
           <button v-on:click="close()">X</button>
@@ -45,6 +45,10 @@ export default {
     initIsLeftOpening: {
       type: Boolean,
       default: true
+    },
+    initIsFullScreen: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -128,6 +132,13 @@ div#contents {
   background: transparent;
   /* 後で消す */
   background: white;
+}
+
+div#contents.fullscreen{
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 
 div#photoarea {

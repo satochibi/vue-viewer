@@ -4,23 +4,28 @@
       <h1>子規選句稿「なじみ集」</h1>
       <hr />
       <div id="tooltip">
-        <div id="page">
-          <label>
-            ページ番号: <input type="number" min="0" v-bind:max="this.imagesCount-1" v-bind:value="this.getIndex" v-on:input="onPageChange($event, $event.target.value)" />/{{this.imagesCount}}
-          </label>
-        </div>
         <button class="icon">
           <font-awesome-icon icon="info-circle" />
         </button>
         <button class="icon" v-on:click="thumbnailToggle()">
           <font-awesome-icon icon="th" />
         </button>
-        <button class="icon">
-          <font-awesome-icon icon="search-minus" />
-        </button>
-        <button class="icon">
-          <font-awesome-icon icon="search-plus" />
-        </button>
+        <div id="page">
+          <label>
+            Page: <input type="number" min="0" v-bind:max="this.imagesCount-1" v-bind:value="this.getIndex" v-on:input="onPageChange($event, $event.target.value)" />/{{this.imagesCount}}
+          </label>
+        </div>
+        <div id="zoom">
+          <button class="icon">
+            <font-awesome-icon icon="search-minus" />
+          </button>
+          <label>
+            100%
+          </label>
+          <button class="icon">
+            <font-awesome-icon icon="search-plus" />
+          </button>
+        </div>
         <button class="icon">
           <font-awesome-icon icon="expand-arrows-alt" />
         </button>
@@ -33,14 +38,14 @@
         <button class="icon">
           <font-awesome-icon icon="file-image" />
         </button>
-        <button class="icon">
+        <button class="icon" v-on:click="fullScreenToggle()">
           <font-awesome-icon icon="expand" />
         </button>
       </div>
     </div>
     <div id="normalview">
       <div id="viewer" v-bind:style="viewerStyle">
-        <Viewer v-bind:initIsLeftOpening="false"></Viewer>
+        <Viewer v-bind:initIsLeftOpening="false" v-bind:initIsFullScreen="isFullScreen"></Viewer>
       </div>
       <div id="thumbnail" v-bind:style="thumbnailStyle">
         <Thumbnail v-bind:align="isThumbnailColumnORRow"></Thumbnail>
@@ -87,6 +92,7 @@ export default {
     return {
       isThumbnailOpen: this.initThubmnailOpen,
       isThumbnailColumnORRow: 'column',
+      isFullScreen: false,
       thumbnailStyle: {},
       viewerStyle: {}
     }
@@ -127,7 +133,22 @@ export default {
   methods: {
     thumbnailToggle: function() {
       // サムネイルをトグルさせる
-      this.isThumbnailOpen ^= true
+      if (this.isFullScreen) {
+        this.isFullScreen = false
+        document.exitFullscreen()
+      }
+      this.isThumbnailOpen = !this.isThumbnailOpen
+    },
+    fullScreenToggle: function() {
+      this.isFullScreen = !this.isFullScreen
+
+      this.isThumbnailOpen = false
+
+      if (this.isFullScreen) {
+        document.body.requestFullscreen()
+      } else {
+        document.exitFullscreen()
+      }
     },
     onPageChange: function(event, index) {
       if (!index) {
@@ -172,6 +193,7 @@ export default {
   height: var(--toolbar-size);
   margin: 0;
   padding: 0;
+  background: white;
 }
 
 #toolbar hr{
