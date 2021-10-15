@@ -124,6 +124,10 @@ export default {
         throw new Error('thumbnailAlignプロパティが不正です。')
     }
   },
+  beforeRouteUpdate(to, from, next) {
+    this.changeIndex(parseInt(to.params.index, 10))
+    next()
+  },
   computed: {
     styles() {
       return {
