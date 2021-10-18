@@ -191,14 +191,17 @@ button {
 #nav-close {
   right: 0;
   top: 0;
+  z-index: 10;
 }
 
 #nav-left {
   left: 0;
   top: 50%;
+  z-index: 10;
 }
 #nav-right {
   right: 0;
   top: 50%;
+  z-index: 10;
 }
 </style>
