@@ -25,7 +25,8 @@
             →
           </button>
         </div>
-        <img v-bind:src="getCurrentImage.src" v-bind:alt="getCurrentImage.name" />
+        <Spinner class="loading-icon" v-show="isLoading" size="huge"></Spinner>
+        <img class="loaded-image" v-show="!isLoading" v-bind:src="getCurrentImage.src" v-bind:alt="getCurrentImage.name" v-on:load="anImageLoaded" />
       </div>
     </div>
   </div>
@@ -33,12 +34,17 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import Spinner from 'vue-simple-spinner'
 
 export default {
   name: 'viewer',
+  components: {
+    Spinner
+  },
   data() {
     return {
-      isLeftOpening: this.initIsLeftOpening
+      isLeftOpening: this.initIsLeftOpening,
+      isLoading: true
     }
   },
   props: {
@@ -49,6 +55,12 @@ export default {
     initIsFullScreen: {
       type: Boolean,
       default: false
+    }
+  },
+  watch: {
+    getCurrentImage: function(now, old) {
+      // 画像変更開始時
+      this.isLoading = true
     }
   },
   computed: {
@@ -108,6 +120,10 @@ export default {
         this.$router.push('/' + this.getIndex, () => {})
       }
     },
+    anImageLoaded() {
+      // 画像読み込み完了時
+      this.isLoading = false
+    },
     ...mapActions(['changeIndex'])
   }
 }
@@ -152,10 +168,16 @@ div#photoarea {
   align-items: center;
 }
 
-div#photoarea img {
+div#photoarea img.loaded-image {
   display: block;
   max-width: 100%;
   max-height: 100%;
+  z-index: 5;
+}
+
+div#photoarea .loading-icon {
+  position: absolute;
+  z-index: 1;
 }
 
 .navigation {
