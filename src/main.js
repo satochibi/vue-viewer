@@ -9,7 +9,9 @@ import { faInfoCircle, faTh, faSearchMinus, faSearchPlus, faExpandArrowsAlt, faU
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toasted from 'vue-toasted'
 import VueClipboard from 'vue-clipboard2'
+import VueTouch from 'vue-touch'
 
+Vue.use(VueTouch, { name: 'v-touch' })
 Vue.use(Toasted, { position: 'top-right', duration: 1000, type: 'info' })
 Vue.use(VueClipboard)
 
