@@ -23,8 +23,8 @@ export default {
       test: 'test',
       box: {
         index: 0,
-        height: 100,
-        width: 100,
+        height: 80,
+        width: 80,
         position: {
           x: 0,
           y: 0
@@ -64,8 +64,8 @@ export default {
   computed: {
     boxStyle() {
       return {
-        '--box-height': this.box.height + 'px',
-        '--box-width': this.box.width + 'px',
+        '--box-height': this.box.height + '%',
+        '--box-width': this.box.width + '%',
         '--box-scale': this.box.scale,
         '--box-rotation': this.box.rotation + 'deg',
         '--box-bgcolor': this.box.backgroundColor[this.box.index],
@@ -154,21 +154,23 @@ export default {
 
 <style scoped>
 div.main {
-  width: 100vw;
-  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
   background: #444;
-  color: white;
 }
 
 div.box {
-  position: absolute;
+  position: relative;
   width: var(--box-width);
   height: var(--box-height);
   top: calc(50% - var(--box-width)/2);
   left: calc(50% - var(--box-height)/2);
   transform: translate(var(--box-position-x), var(--box-position-y)) scale(var(--box-scale)) rotate(var(--box-rotation));
-  /* transform-origin: calc(50% + var(--box-position-x)) calc(50% + var(--box-position-y)); */
   background: var(--box-bgcolor);
-  text-shadow: 1px 2px 3px #000;
+  text-shadow: 1px 2px 3px black;
+  color: white;
 }
 </style>
