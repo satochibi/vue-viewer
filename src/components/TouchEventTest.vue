@@ -10,7 +10,9 @@
       v-on:rotatestart="onRotateStart"
       v-on:rotatemove="onRotateMove"
       v-on:rotateend="onRotateEnd">
-      <div class="box">{{test}}</div>
+      <div class="box">
+        <h1>{{test}}</h1>
+      </div>
     </v-touch>
   </div>
 </template>
@@ -99,8 +101,8 @@ export default {
       console.log($event)
     },
     onSwipeRight($event) {
-      this.test = '→ swiped'
       this.nextIndex()
+      this.test = '→ swiped index: ' + this.box.index
       console.log($event)
     },
     onSwipeBottom($event) {
@@ -108,8 +110,8 @@ export default {
       console.log($event)
     },
     onSwipeLeft($event) {
-      this.test = '← swiped'
       this.prevIndex()
+      this.test = '← swiped index: ' + this.box.index
       console.log($event)
     },
     onRotateStart($event) {
@@ -172,5 +174,14 @@ div.box {
   background: var(--box-bgcolor);
   text-shadow: 1px 2px 3px black;
   color: white;
+}
+
+div.box > h1 {
+  position: relative;
+  top: 50%;
+  transform: translate(0, -50%);
+  width: 100%;
+  text-align: center;
+  font-size: 4em;
 }
 </style>
