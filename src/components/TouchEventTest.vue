@@ -73,6 +73,8 @@ export default {
     },
     onTap($event) {
       this.test = 'tapped'
+      this.box.rotation = 0
+      this.box.rotationOffset = 0
       console.log($event)
     },
     onSwipeTop($event) {
